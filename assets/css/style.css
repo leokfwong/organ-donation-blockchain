@@ -1,0 +1,169 @@
+body {
+	font-family: 'Roboto';
+	cursor: default;
+}
+#nav-bar {
+	width: 100%;
+	height: 100px;
+	background: #3D485E;
+}
+#nav-bar-wrapper {
+	max-width: 980px;
+	margin: 0 auto;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#title {
+	font-size: 200%;
+	font-family: 'Raleway';
+	font-weight: bold;
+	color: white;
+}
+#wrapper {
+	max-width: 980px;
+	margin: 0 auto;
+	height: 100%;
+}
+h1, h2, h3 {
+	font-family: 'Raleway';
+	font-weight: bold;
+}
+/* Page Header */
+#page-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	padding: 10px 0px 10px 0px;
+	color: #3D485E;
+	font-weight: bold;
+}
+#page-title {
+
+}
+/* Menu Box */
+#menu-box {
+	width: 100%;
+	height: 75%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.menu-row {
+	width: 75%;
+	height: 33%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 2%;
+}
+.menu-item {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.menu-item-text {
+	width: 60%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	border: 2px solid #3D485E;
+	background: #3D485E;
+	color: white;
+	font-family: 'Raleway';
+	font-weight: bold;
+	font-size: 150%;
+	padding: 12%;
+}
+#content-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+}
+#form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #3D485E;
+	color: white;
+	width: 69%;
+	height: 100%;
+	border-radius: 10px;
+}
+#form-box {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 80%;
+	height: 100%;
+	padding: 20px;
+}
+.form-row {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+	padding: 10px;
+}
+#form-message {
+	padding-bottom: 25px;
+}
+.form-title {
+	padding-bottom: 5px;
+}
+.form-input {
+	padding: 5px;
+}
+#form-submit-row {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	flex-direction: row;
+	width: 100%;
+}
+#form-submit-button {
+	padding: 10px;
+	background: white;
+	color: #3D485E;
+	border-radius: 5px;
+	font-weight: bold;
+}
+/* Patient List */
+#list-container {
+	width: 100%;
+	height: 100%;
+}
+.list-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #F5F5F5;
+	color: #3D485E;
+	margin: 5px 0px 5px 0px;
+}
+#list-header {
+	background: #3D485E;
+	color: white;
+	border-radius: 10px 10px 0px 0px;
+}
+.list-item {
+	padding: 20px;
+}
+.list-item-1 {
+	width: 20%;
+}
+.list-item-2 {
+	width: 20%;
+}
+.list-item-3 {
+	width: 10%;
+}
