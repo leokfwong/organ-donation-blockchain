@@ -32,6 +32,9 @@ function loadMenuBox() {
 	let menu_box = document.getElementById("menu-box");
 	menu_box.style.display = "flex";
 
+	let back_button = document.getElementById("page-back");
+	back_button.style.display = "none";
+
 	let content_box = document.getElementById("content-box");
 	content_box.style.display = "none";
 
@@ -45,6 +48,9 @@ function loadAddCandidateForm(type) {
 	// Hide menu box
 	let menu_box = document.getElementById("menu-box");
 	menu_box.style.display = "none";
+	// Display back button
+	let back_button = document.getElementById("page-back");
+	back_button.style.display = "block";
 	// Clear and show content box
 	let content_box = document.getElementById("content-box");
 	content_box.innerHTML = "";
@@ -216,13 +222,16 @@ function viewCandidateList(type) {
 	// Hide menu box
 	let menu_box = document.getElementById("menu-box");
 	menu_box.style.display = "none";
+	// Display back button
+	let back_button = document.getElementById("page-back");
+	back_button.style.display = "block";
 	// Clear and show content box
 	let content_box = document.getElementById("content-box");
 	content_box.innerHTML = "";
 	content_box.style.display = "flex";
 	// Update page title
 	let page_title = document.getElementById("page-title");
-	page_title.innerHTML = "View " + type;
+	page_title.innerHTML = "View " + type + " list";
 
 	// List container
 	let list_container = document.createElement("div");

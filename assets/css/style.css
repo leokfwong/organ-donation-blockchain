@@ -34,12 +34,12 @@ h1, h2, h3 {
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
-	padding: 10px 0px 10px 0px;
+	padding: 25px 0px 25px 0px;
 	color: #3D485E;
 	font-weight: bold;
 }
-#page-title {
-
+#page-back {
+	display: none;
 }
 /* Menu Box */
 #menu-box {
