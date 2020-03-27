@@ -4,7 +4,7 @@ body {
 }
 #nav-bar {
 	width: 100%;
-	height: 100px;
+	min-height: 100px;
 	background: #3D485E;
 }
 #nav-bar-wrapper {
@@ -12,14 +12,12 @@ body {
 	margin: 0 auto;
 	height: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 }
 #title {
-	font-size: 200%;
-	font-family: 'Raleway';
-	font-weight: bold;
-	color: white;
+	height: 100%;
+	padding: 10px;
 }
 #wrapper {
 	max-width: 980px;
@@ -107,6 +105,11 @@ h1, h2, h3 {
 	height: 100%;
 	padding: 20px;
 }
+.form-row-multiple {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .form-row {
 	display: flex;
 	justify-content: center;
@@ -157,6 +160,7 @@ h1, h2, h3 {
 }
 .list-item {
 	padding: 20px;
+	width: 14%;
 }
 .list-item-1 {
 	width: 20%;

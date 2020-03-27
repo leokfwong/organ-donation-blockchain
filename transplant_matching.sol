@@ -14,7 +14,7 @@ contract TransplantMatching {
         address patient_address;
     }
     
-    function addPatient(string memory _firstname, string memory _lastname, string memory _bloodtype) public returns (string memory){
+    function addPatient(string memory _firstname, string memory _lastname, string memory _bloodtype, uint _age, uint _height, uint _weight) public returns (string memory){
         if (bytes(_firstname).length == 0) {
             return "Required fields cannot be empty.";
         } else {

@@ -1,13 +1,23 @@
 window.onload = function() {
 
+	let add_donor_menu = document.getElementById('menu-item-1');
+	add_donor_menu.addEventListener('click', function() {
+		loadAddCandidateForm("donor");
+	});
+
+	let view_donors_list = document.getElementById('menu-item-2');
+	view_donors_list.addEventListener("click", function() {
+		viewCandidateList("donor");
+	});
+
 	let add_patient_menu = document.getElementById('menu-item-3');
 	add_patient_menu.addEventListener('click', function() {
-		loadAddPatientForm();
+		loadAddCandidateForm("patient");
 	});
 
 	let view_patients_list = document.getElementById('menu-item-4');
 	view_patients_list.addEventListener("click", function() {
-		viewPatientsList();
+		viewCandidateList("patient");
 	});
 
 	let back_button = document.getElementById("page-back");
@@ -30,7 +40,7 @@ function loadMenuBox() {
 
 }
 
-function loadAddPatientForm() {
+function loadAddCandidateForm(type) {
 
 	// Hide menu box
 	let menu_box = document.getElementById("menu-box");
@@ -41,7 +51,7 @@ function loadAddPatientForm() {
 	content_box.style.display = "flex";
 	// Update page title
 	let page_title = document.getElementById("page-title");
-	page_title.innerHTML = "Add Patient";
+	page_title.innerHTML = "Add " + type;
 
 	// Form box container
 	let form_container = document.createElement("div");
@@ -59,11 +69,16 @@ function loadAddPatientForm() {
 	form_box.appendChild(form_message);
 	form_message.innerHTML = "Please enter your personal information below."
 
+	let form_firstname_lastname = document.createElement("div");
+	form_firstname_lastname.id = "form-firstname-lastname";
+	form_firstname_lastname.className = "form-row-multiple";
+	form_box.appendChild(form_firstname_lastname);
+
 	// Form first name
 	let form_firstname = document.createElement("div");
 	form_firstname.id = "form-firstname";
 	form_firstname.className = "form-row";
-	form_box.appendChild(form_firstname);
+	form_firstname_lastname.appendChild(form_firstname);
 
 	let form_firstname_title = document.createElement("div");
 	form_firstname_title.id = "form-firstname-title";
@@ -80,7 +95,7 @@ function loadAddPatientForm() {
 	let form_lastname = document.createElement("div");
 	form_lastname.id = "form-lastname";
 	form_lastname.className = "form-row";
-	form_box.appendChild(form_lastname);
+	form_firstname_lastname.appendChild(form_lastname);
 
 	let form_lastname_title = document.createElement("div");
 	form_lastname_title.id = "form-lastname-title";
@@ -110,6 +125,62 @@ function loadAddPatientForm() {
 	form_bloodtype_input.className = "form-input";
 	form_bloodtype.appendChild(form_bloodtype_input);
 
+	// Form medid
+	let form_medid = document.createElement("div");
+	form_medid.id = "form-medid";
+	form_medid.className = "form-row";
+	form_box.appendChild(form_medid);
+
+	let form_medid_title = document.createElement("div");
+	form_medid_title.id = "form-medid-title";
+	form_medid_title.className = "form-title";
+	form_medid.appendChild(form_medid_title);
+	form_medid_title.innerHTML = "Medical Insurance #";
+
+	let form_medid_input = document.createElement("input");
+	form_medid_input.id = "form-medid-input";
+	form_medid_input.className = "form-input";
+	form_medid.appendChild(form_medid_input);
+
+	let form_height_weight = document.createElement("div");
+	form_height_weight.id = "form-height-weight";
+	form_height_weight.className = "form-row-multiple";
+	form_box.appendChild(form_height_weight);
+
+	// Form height
+	let form_height = document.createElement("div");
+	form_height.id = "form-height";
+	form_height.className = "form-row";
+	form_height_weight.appendChild(form_height);
+
+	let form_height_title = document.createElement("div");
+	form_height_title.id = "form-height-title";
+	form_height_title.className = "form-title";
+	form_height.appendChild(form_height_title);
+	form_height_title.innerHTML = "Height (cm)"
+
+	let form_height_input = document.createElement("input");
+	form_height_input.id = "form-height-input";
+	form_height_input.className = "form-input";
+	form_height.appendChild(form_height_input);
+
+	// Form weight
+	let form_weight = document.createElement("div");
+	form_weight.id = "form-weight";
+	form_weight.className = "form-row";
+	form_height_weight.appendChild(form_weight);
+
+	let form_weight_title = document.createElement("div");
+	form_weight_title.id = "form-weight-title";
+	form_weight_title.className = "form-title";
+	form_weight.appendChild(form_weight_title);
+	form_weight_title.innerHTML = "Weight (kg)"
+
+	let form_weight_input = document.createElement("input");
+	form_weight_input.id = "form-weight-input";
+	form_weight_input.className = "form-input";
+	form_weight.appendChild(form_weight_input);
+
 	// Form submit
 	let form_submit_row = document.createElement("div");
 	form_submit_row.id = "form-submit-row";
@@ -125,13 +196,22 @@ function loadAddPatientForm() {
 		let firstname = document.getElementById("form-firstname-input").value;
 		let lastname = document.getElementById("form-lastname-input").value;
 		let bloodtype = document.getElementById("form-bloodtype-input").value;
-		console.log("Adding patient " + firstname + " " + lastname + " (" + bloodtype + ")");
-		addPatient(firstname, lastname, bloodtype);
+		let medid = document.getElementById("form-medid-input").value;
+		let height = document.getElementById("form-height-input").value;
+		let weight = document.getElementById("form-weight-input").value;
+		console.log("Adding patient " + firstname + " " + lastname + " (" + bloodtype + ", " + medid + ", " + height + ", " + weight + ")");
+		if (type == "patient") {
+			addPatient(firstname, lastname, bloodtype, medid, height, weight);
+		} else if (type == "donor") {
+			addDonor(firstname, lastname, bloodtype, medid, height, weight);
+		} else {
+			console.log("Candidate type doesn't exist.");
+		}
 	});
 
 }
 
-function viewPatientsList() {
+function viewCandidateList(type) {
 
 	// Hide menu box
 	let menu_box = document.getElementById("menu-box");
@@ -142,7 +222,7 @@ function viewPatientsList() {
 	content_box.style.display = "flex";
 	// Update page title
 	let page_title = document.getElementById("page-title");
-	page_title.innerHTML = "View Patients";
+	page_title.innerHTML = "View " + type;
 
 	// List container
 	let list_container = document.createElement("div");
@@ -150,6 +230,12 @@ function viewPatientsList() {
 	content_box.appendChild(list_container);
 	list_container.innerHTML = "Loading...";
 
-	viewPatients(list_container.id);
+	if (type == "patient") {
+		viewPatients(list_container.id);
+	} else if (type == "donor") {
+		viewDonors(list_container.id);
+	} else {
+		console.log("Candidate type doesn't exist");
+	}
 
 }
