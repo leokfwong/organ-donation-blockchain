@@ -260,32 +260,66 @@ const contractAbi = [{
 	"type": "function"
 }];
 
-const contractAddress = '0xD629508762561E89B11a99E4b9d5031A56c3D697';
+const contractAddress = '0xE66bC32e666ae35850F0037F0795eC708e720905';
 const contract = new web3.eth.Contract(contractAbi, contractAddress);
+
+function clearForm() {
+	for (let i = 0; i < input_names.length; i++) {
+		document.getElementById(input_names[i]).value = "";
+	}
+}
 
 function addPatient(firstname, lastname, bloodtype, medid, height, weight) {
 
 	console.log("Calling addPatient function... (" + firstname + ", " + lastname + ", " + bloodtype + ", " + medid + "," + height + ", " + weight + ")");
+
+	let form_response = document.getElementById("form-response");
+	let form_response_message = document.getElementById("form-response-message");
+
 	web3.eth.getAccounts().then(function(accounts) {
 		contract.methods.addPatient(firstname, lastname, bloodtype, medid, height, weight).send({
 			from: accounts[0],
 			gas: 3000000
+		}, function(response) {
+			if (response == null) {
+				console.log("Success!");
+				form_response_message.innerHTML = "Success!";
+				form_response.style.background = "#22B573";
+				clearForm();
+			}
 		}).catch((err) => {
 			console.log("Failed with error: " + err);
+			form_response_message.innerHTML = err;
+			form_response.style.background = "#D84A49";
 		});
+		form_response.style.display = "flex";
 	});
 }
 
 function addDonor(firstname, lastname, bloodtype, medid, height, weight) {
 
 	console.log("Calling addDonor function... (" + firstname + ", " + lastname + ", " + bloodtype + ", " + medid + "," + height + ", " + weight + ")");
+
+	let form_response = document.getElementById("form-response");
+	let form_response_message = document.getElementById("form-response-message");
+
 	web3.eth.getAccounts().then(function(accounts) {
 		contract.methods.addDonor(firstname, lastname, bloodtype, medid, height, weight).send({
 			from: accounts[0],
 			gas: 3000000
+		}, function(response) {
+			if (response == null) {
+				console.log("Success!");
+				form_response_message.innerHTML = "Success!";
+				form_response.style.background = "#22B573";
+				clearForm();
+			}
 		}).catch((err) => {
 			console.log("Failed with error: " + err);
+			form_response_message.innerHTML = err;
+			form_response.style.background = "#D84A49";
 		});
+		form_response.style.display = "flex";
 	});
 }
 

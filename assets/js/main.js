@@ -1,3 +1,5 @@
+const input_names = ["form-firstname-input", "form-lastname-input", "form-bloodtype-input", "form-medid-input", "form-height-input", "form-weight-input"];
+
 window.onload = function() {
 
 	let add_donor_menu = document.getElementById('menu-item-1');
@@ -197,6 +199,15 @@ function loadAddCandidateForm(type) {
 	form_submit_button.id = "form-submit-button";
 	form_submit_row.appendChild(form_submit_button);
 	form_submit_button.innerHTML = "Submit";
+
+	// Form response box
+	let form_response = document.createElement("div");
+	form_response.id = "form-response";
+	content_box.appendChild(form_response);
+
+	let form_response_message = document.createElement("div");
+	form_response_message.id = "form-response-message";
+	form_response.appendChild(form_response_message);
 
 	form_submit_button.addEventListener('click', function() {
 		let firstname = document.getElementById("form-firstname-input").value;
