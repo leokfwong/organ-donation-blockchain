@@ -1,5 +1,10 @@
 const input_names = ["form-firstname-input", "form-lastname-input", "form-bloodtype-input", "form-medid-input", "form-height-input", "form-weight-input"];
 
+const capitalize = (s) => {
+	if (typeof s !== 'string') return ''
+	return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
 window.onload = function() {
 
 	let add_donor_menu = document.getElementById('menu-item-1');
@@ -20,6 +25,12 @@ window.onload = function() {
 	let view_patients_list = document.getElementById('menu-item-4');
 	view_patients_list.addEventListener("click", function() {
 		viewCandidateList("patient");
+	});
+
+	let find_matching = document.getElementById("menu-item-5");
+	find_matching.addEventListener("click", function() {
+		findMatchings();
+		fetchDonorsPatients();
 	});
 
 	let back_button = document.getElementById("page-back");
@@ -59,7 +70,7 @@ function loadAddCandidateForm(type) {
 	content_box.style.display = "flex";
 	// Update page title
 	let page_title = document.getElementById("page-title");
-	page_title.innerHTML = "Add " + type;
+	page_title.innerHTML = capitalize(type) + " Registration Form";
 
 	// Form box container
 	let form_container = document.createElement("div");
@@ -257,5 +268,43 @@ function viewCandidateList(type) {
 	} else {
 		console.log("Candidate type doesn't exist");
 	}
+
+}
+
+function findMatchings() {
+
+	// Hide menu box
+	let menu_box = document.getElementById("menu-box");
+	menu_box.style.display = "none";
+	// Display back button
+	let back_button = document.getElementById("page-back");
+	back_button.style.display = "block";
+	// Clear and show content box
+	let content_box = document.getElementById("content-box");
+	content_box.innerHTML = "";
+	content_box.style.display = "flex";
+	// Update page title
+	let page_title = document.getElementById("page-title");
+	page_title.innerHTML = "Donors and Patients Matching";
+
+	let header = document.createElement("div");
+	header.id = "matching-header";
+	content_box.appendChild(header);
+
+	let header_patients = document.createElement("div");
+	header_patients.id = "matching-header-patients";
+	header_patients.className = "matching-header-subject";
+	header.appendChild(header_patients);
+	header_patients.innerHTML = "Patients";
+
+	let header_donors = document.createElement("div");
+	header_donors.id = "matching-header-donors";
+	header_donors.className = "matching-header-subject";
+	header.appendChild(header_donors);
+	header_donors.innerHTML = "Donors";
+
+	let content = document.createElement("div");
+	content.id = "matching-content";
+	content_box.appendChild(content);
 
 }

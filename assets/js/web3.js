@@ -418,5 +418,114 @@ function viewDonors(div_id) {
 			}
 		});
 	});
+}
 
+function fetchDonorsPatients() {
+
+	let patients = [];
+	let donors = [];
+	let attributes = ["firstname", "lastname", "bloodtype", "medid", "height", "weight", "status"];
+
+	let promise_donor = new Promise((resolve, reject) => {
+		contract.methods.donorCount().call().then(function(count) {
+			count++;
+			web3.eth.getAccounts().then(function(accounts) {
+
+				// Fetch donors
+				for (let i = 1; i < count; i++) {
+					contract.methods.getAllDonors(i).call().then(function(result) {
+						let donor = {};
+						for (let j = 0; j < attributes.length; j++) {
+							donor[attributes[j]] = result[j];
+						}
+						donors.push(donor);
+						if ((i + 1) == count) resolve();
+					});
+				}
+
+			});
+		});
+	});
+
+	let promise_patient = new Promise((resolve, reject) => {
+		contract.methods.patientCount().call().then(function(count) {
+			count++;
+			web3.eth.getAccounts().then(function(accounts) {
+
+				// Fetch donors
+				for (let i = 1; i < count; i++) {
+					contract.methods.getAllPatients(i).call().then(function(result) {
+						let patient = {};
+						for (let j = 0; j < attributes.length; j++) {
+							patient[attributes[j]] = result[j];
+						}
+						patients.push(patient);
+						if ((i + 1) == count) resolve();
+					});
+				}
+
+			});
+		});
+	});
+
+	Promise.all([promise_patient]).then(() => {
+		console.log("Fetched donors and patients!");
+
+		let content = document.getElementById("matching-content");
+		content.innerHTML = "";
+
+		// Iterate through patients and try to find matching
+		for (let i = 0; i < patients.length; i++) {
+			// Initialize variables
+			let patient = patients[i];
+			let match_found = 0;
+			// Create row
+			let row = document.createElement("div");
+			row.id = "matching-row-" + (i + 1);
+			row.className = "matching-row";
+			content.appendChild(row);
+
+			let patient_container = document.createElement("div");
+			patient_container.id = "patient-container-" + (i + 1);
+			patient_container.className = "patient-container subject-container";
+			row.appendChild(patient_container);
+
+			let donor_container = document.createElement("div");
+			donor_container.id = "donor-container-" + (i + 1);
+			donor_container.className = "donor-container subject-container";
+			row.appendChild(donor_container);
+
+			let patient_entry = document.createElement("div");
+			patient_entry.id = "patient-entry-" + (i + 1);
+			patient_entry.className = "patient-entry subject-entry";
+			patient_container.appendChild(patient_entry);
+			patient_entry.innerHTML = patient.firstname + " " + patient.lastname;
+
+			console.log("Find match for patient: " + patient.firstname + " " + patient.lastname);
+			for (let j = 0; j < donors.length; j++) {
+				let donor = donors[j];
+				if (patient.bloodtype == donor.bloodtype) {
+
+					console.log("Match found: " + donor.firstname + " " + donor.lastname);
+					match_found += 1;
+
+					let donor_entry = document.createElement("div");
+					donor_entry.id = "donor-entry-" + (i + 1);
+					donor_entry.className = "donor-entry subject-entry";
+					donor_container.appendChild(donor_entry);
+					donor_entry.innerHTML = donor.firstname + " " + donor.lastname;
+
+				}
+			}
+			if (match_found == 0) {
+				console.log("No match found.");
+				let donor_entry = document.createElement("div");
+				donor_entry.id = "donor-entry-" + (i + 1);
+				donor_entry.className = "donor-entry";
+				donor_container.appendChild(donor_entry);
+				donor_entry.innerHTML = "No match found.";
+			}
+		}
+
+	});
 }
