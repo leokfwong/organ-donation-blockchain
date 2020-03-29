@@ -288,7 +288,11 @@ function addPatient(firstname, lastname, bloodtype, medid, height, weight) {
 	console.log("Calling addPatient function... (" + firstname + ", " + lastname + ", " + bloodtype + ", " + medid + "," + height + ", " + weight + ")");
 
 	let form_response = document.getElementById("form-response");
+	let form_response_loading = document.getElementById("form-response-loading");
 	let form_response_message = document.getElementById("form-response-message");
+
+	form_response.style.display = "none";
+	form_response_loading.style.display = "flex";
 
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
@@ -310,6 +314,7 @@ function addPatient(firstname, lastname, bloodtype, medid, height, weight) {
 				form_response.style.background = "#D84A49";
 			});
 			form_response.style.display = "flex";
+			form_response_loading.style.display = "none";
 		});
 
 	}).catch((err) => {
@@ -317,6 +322,7 @@ function addPatient(firstname, lastname, bloodtype, medid, height, weight) {
 		form_response_message.innerHTML = err;
 		form_response.style.background = "#D84A49";
 		form_response.style.display = "flex";
+		form_response_loading.style.display = "none";
 	});
 }
 
@@ -325,7 +331,12 @@ function addDonor(firstname, lastname, bloodtype, medid, height, weight) {
 	console.log("Calling addDonor function... (" + firstname + ", " + lastname + ", " + bloodtype + ", " + medid + "," + height + ", " + weight + ")");
 
 	let form_response = document.getElementById("form-response");
+	let form_response_loading = document.getElementById("form-response-loading");
 	let form_response_message = document.getElementById("form-response-message");
+
+	form_response.style.display = "none";
+	form_response_loading.style.display = "flex";
+
 
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
@@ -347,6 +358,7 @@ function addDonor(firstname, lastname, bloodtype, medid, height, weight) {
 				form_response.style.background = "#D84A49";
 			});
 			form_response.style.display = "flex";
+			form_response_loading.style.display = "none";
 		});
 
 	}).catch((err) => {
@@ -354,15 +366,19 @@ function addDonor(firstname, lastname, bloodtype, medid, height, weight) {
 		form_response_message.innerHTML = err;
 		form_response.style.background = "#D84A49";
 		form_response.style.display = "flex";
+		form_response_loading.style.display = "none";
 	});
 }
 
 function viewPatients(div_id) {
 
+	let list_loading = document.getElementById("list-loading");
+
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
 
 		contract.methods.patientCount().call().then(function(count) {
+			list_loading.style.display = "none";
 			count++;
 			console.log(count);
 			web3.eth.getAccounts().then(function(accounts) {
@@ -419,17 +435,28 @@ function viewPatients(div_id) {
 	}).catch((e) => {
 		console.log("Not connected to blockchain: ", e);
 		let list_container = document.getElementById("list-container");
-		list_container.innerHTML = e;
+		list_container.innerHTML = "";
+
+		list_loading.style.display = "none";
+
+		let list_error = document.createElement("list-error");
+		list_error.id = "list-error";
+		list_error.className = "error-box";
+		list_container.appendChild(list_error);
+		list_error.innerHTML = e;
 	});
 }
 
 
 function viewDonors(div_id) {
 
+	let list_loading = document.getElementById("list-loading");
+
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
 
 		contract.methods.donorCount().call().then(function(count) {
+			list_loading.style.display = "none";
 			count++;
 			console.log(count);
 			web3.eth.getAccounts().then(function(accounts) {
@@ -486,7 +513,15 @@ function viewDonors(div_id) {
 	}).catch((e) => {
 		console.log("Not connected to blockchain: ", e);
 		let list_container = document.getElementById("list-container");
-		list_container.innerHTML = e;
+		list_container.innerHTML = "";
+
+		list_loading.style.display = "none";
+
+		let list_error = document.createElement("list-error");
+		list_error.id = "list-error";
+		list_error.className = "error-box";
+		list_container.appendChild(list_error);
+		list_error.innerHTML = e;
 	});
 }
 
@@ -516,7 +551,18 @@ function fetchDonorsPatients() {
 					}
 				}
 			});
-		});
+		}).catch((e) => {
+			console.log("Not connected to blockchain: ", e);
+			let matching_content = document.getElementById("matching-content");
+			matching_content.innerHTML = "";
+
+			let matching_error = document.createElement("matching-error");
+			matching_error.id = "matching-error";
+			matching_error.className = "error-box";
+			matching_content.appendChild(matching_error);
+			matching_error.innerHTML = e;
+
+		});;;
 	});
 
 	let promise_patient = new Promise((resolve, reject) => {
@@ -539,7 +585,18 @@ function fetchDonorsPatients() {
 					}
 				}
 			});
-		});
+		}).catch((e) => {
+			console.log("Not connected to blockchain: ", e);
+			let matching_content = document.getElementById("matching-content");
+			matching_content.innerHTML = "";
+
+			let matching_error = document.createElement("matching-error");
+			matching_error.id = "matching-error";
+			matching_error.className = "error-box";
+			matching_content.appendChild(matching_error);
+			matching_error.innerHTML = e;
+
+		});;
 	});
 
 	Promise.all([promise_patient]).then(() => {

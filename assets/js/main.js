@@ -216,6 +216,11 @@ function loadAddCandidateForm(type) {
 	form_response.id = "form-response";
 	content_box.appendChild(form_response);
 
+	let form_response_loading = document.createElement("div");
+	form_response_loading.id = "form-response-loading";
+	form_response_loading.className = "response-loading";
+	content_box.appendChild(form_response_loading);
+
 	let form_response_message = document.createElement("div");
 	form_response_message.id = "form-response-message";
 	form_response.appendChild(form_response_message);
@@ -262,8 +267,8 @@ function viewCandidateList(type) {
 
 	let list_loading = document.createElement("div");
 	list_loading.id = "list-loading";
-	list_container.appendChild(list_loading);
-	list_loading.innerHTML = "Loading...";
+	list_loading.className = "response-loading";
+	content_box.appendChild(list_loading);
 
 	if (type == "patient") {
 		viewPatients(list_container.id);
@@ -313,7 +318,7 @@ function findMatchings() {
 
 	let loading = document.createElement("div");
 	loading.id = "matching-loading";
+	loading.className = "response-loading";
 	content.appendChild(loading);
-	loading.innerHTML = "Loading...";
 
 }
