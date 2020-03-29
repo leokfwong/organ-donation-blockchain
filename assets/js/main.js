@@ -259,7 +259,11 @@ function viewCandidateList(type) {
 	let list_container = document.createElement("div");
 	list_container.id = "list-container";
 	content_box.appendChild(list_container);
-	list_container.innerHTML = "Loading...";
+
+	let list_loading = document.createElement("div");
+	list_loading.id = "list-loading";
+	list_container.appendChild(list_loading);
+	list_loading.innerHTML = "Loading...";
 
 	if (type == "patient") {
 		viewPatients(list_container.id);
@@ -306,5 +310,10 @@ function findMatchings() {
 	let content = document.createElement("div");
 	content.id = "matching-content";
 	content_box.appendChild(content);
+
+	let loading = document.createElement("div");
+	loading.id = "matching-loading";
+	content.appendChild(loading);
+	loading.innerHTML = "Loading...";
 
 }

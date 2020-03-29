@@ -167,6 +167,15 @@ h1, h2, h3 {
 	width: 100%;
 	height: 100%;
 }
+#list-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 50px;
+	color: #3D485E;
+}
 .list-row {
 	display: flex;
 	justify-content: space-between;
@@ -174,6 +183,12 @@ h1, h2, h3 {
 	background: #F5F5F5;
 	color: #3D485E;
 	margin: 5px 0px 5px 0px;
+}
+#list-row-empty {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 25px;
 }
 #list-header {
 	background: #3D485E;
@@ -220,6 +235,23 @@ h1, h2, h3 {
 	width: 100%;
 	height: 100%;
 	color: #3D485E;
+	margin-bottom: 100px;
+}
+#matching-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 25px;
+}
+#matching-row-empty {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 25px;
 }
 .matching-row {
 	display: flex;
@@ -247,4 +279,31 @@ h1, h2, h3 {
 	flex-direction: column;
 	width: 90%;
 	height: 90%;
+	padding: 10px;
+	margin: 5px;
+	border: solid 1px #3D485E;
+	border-radius: 5px;
+	background: white;
+}
+.subject-entry-row {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
+}
+.subject-entry-row-info {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-direction: column;
+	padding-right: 50px;
+}
+.subject-entry-row-info-title {
+	font-family: 'Raleway';
+	font-size: 81%;
+}
+.subject-entry-row-info-value {
+	font-weight: bold;
 }
