@@ -65,6 +65,20 @@ const contractAbi = [{
 	"stateMutability": "nonpayable",
 	"type": "function"
 }, {
+	"inputs": [{
+		"internalType": "uint256",
+		"name": "_index",
+		"type": "uint256"
+	}, {
+		"internalType": "string",
+		"name": "_newstatus",
+		"type": "string"
+	}],
+	"name": "updatePatient",
+	"outputs": [],
+	"stateMutability": "nonpayable",
+	"type": "function"
+}, {
 	"inputs": [],
 	"name": "donorCount",
 	"outputs": [{
@@ -122,7 +136,7 @@ const contractAbi = [{
 		"name": "_index",
 		"type": "uint256"
 	}],
-	"name": "getAllDonors",
+	"name": "getDonor",
 	"outputs": [{
 		"internalType": "string",
 		"name": "",
@@ -160,7 +174,7 @@ const contractAbi = [{
 		"name": "_index",
 		"type": "uint256"
 	}],
-	"name": "getAllPatients",
+	"name": "getPatient",
 	"outputs": [{
 		"internalType": "string",
 		"name": "",
@@ -260,7 +274,7 @@ const contractAbi = [{
 	"type": "function"
 }];
 
-const contractAddress = '0x28F630e93Fe10a3Ff807D2C3D706Ad1345C90246';
+const contractAddress = '0x5DE7EE2BedB6b0ff5096cc963ab78de9e4f93a7C';
 const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
 function clearForm() {
@@ -378,7 +392,7 @@ function viewPatients(div_id) {
 					row.innerHTML = "The list is currently empty.";
 				} else {
 					for (let i = 1; i < count; i++) {
-						contract.methods.getAllPatients(i).call().then(function(result) {
+						contract.methods.getPatient(i).call().then(function(result) {
 							console.log(result, i);
 
 							let row = document.createElement("div");
@@ -445,7 +459,7 @@ function viewDonors(div_id) {
 					row.innerHTML = "The list is currently empty.";
 				} else {
 					for (let i = 1; i < count; i++) {
-						contract.methods.getAllDonors(i).call().then(function(result) {
+						contract.methods.getDonor(i).call().then(function(result) {
 							console.log(result, i);
 
 							let row = document.createElement("div");
@@ -491,7 +505,7 @@ function fetchDonorsPatients() {
 					resolve();
 				} else {
 					for (let i = 1; i < count; i++) {
-						contract.methods.getAllDonors(i).call().then(function(result) {
+						contract.methods.getDonor(i).call().then(function(result) {
 							let donor = {};
 							for (let j = 0; j < attributes.length; j++) {
 								donor[attributes[j]] = result[j];
@@ -514,7 +528,7 @@ function fetchDonorsPatients() {
 					resolve();
 				} else {
 					for (let i = 1; i < count; i++) {
-						contract.methods.getAllPatients(i).call().then(function(result) {
+						contract.methods.getPatient(i).call().then(function(result) {
 							let patient = {};
 							for (let j = 0; j < attributes.length; j++) {
 								patient[attributes[j]] = result[j];
