@@ -797,15 +797,10 @@ function fetchDonorsPatients() {
 				medid.appendChild(medid_value);
 				medid_value.innerHTML = patient.medid;
 
-				let row_3 = document.createElement("div");
-				row_3.id = "patient-entry-" + (i + 1) + "-row-3";
-				row_3.className = "subject-entry-row";
-				patient_entry.appendChild(row_3);
-
 				let height = document.createElement("div");
 				height.id = "patient-entry-" + (i + 1) + "-row-1-height";
 				height.className = "subject-entry-row-info";
-				row_3.appendChild(height);
+				row_2.appendChild(height);
 
 				let height_title = document.createElement("div");
 				height_title.id = "patient-entry-" + (i + 1) + "-row-1-height-title";
@@ -822,7 +817,7 @@ function fetchDonorsPatients() {
 				let weight = document.createElement("div");
 				weight.id = "patient-entry-" + (i + 1) + "-row-1-weight";
 				weight.className = "subject-entry-row-info";
-				row_3.appendChild(weight);
+				row_2.appendChild(weight);
 
 				let weight_title = document.createElement("div");
 				weight_title.id = "patient-entry-" + (i + 1) + "-row-1-weight-title";
@@ -927,15 +922,10 @@ function fetchDonorsPatients() {
 						medid.appendChild(medid_value);
 						medid_value.innerHTML = donor.medid;
 
-						let row_3 = document.createElement("div");
-						row_3.id = "donor-entry-" + (i + 1) + "-row-3";
-						row_3.className = "subject-entry-row";
-						donor_entry.appendChild(row_3);
-
 						let height = document.createElement("div");
 						height.id = "donor-entry-" + (i + 1) + "-row-1-height";
 						height.className = "subject-entry-row-info";
-						row_3.appendChild(height);
+						row_2.appendChild(height);
 
 						let height_title = document.createElement("div");
 						height_title.id = "donor-entry-" + (i + 1) + "-row-1-height-title";
@@ -952,7 +942,7 @@ function fetchDonorsPatients() {
 						let weight = document.createElement("div");
 						weight.id = "donor-entry-" + (i + 1) + "-row-1-weight";
 						weight.className = "subject-entry-row-info";
-						row_3.appendChild(weight);
+						row_2.appendChild(weight);
 
 						let weight_title = document.createElement("div");
 						weight_title.id = "donor-entry-" + (i + 1) + "-row-1-weight-title";
