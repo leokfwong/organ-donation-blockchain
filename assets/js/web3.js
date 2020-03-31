@@ -719,6 +719,28 @@ function fetchDonorsPatients() {
 				patient_entry.className = "patient-entry subject-entry";
 				patient_container.appendChild(patient_entry);
 
+				let row_0 = document.createElement("div");
+				row_0.id = "patient-entry-" + (i + 1) + "-row-0";
+				row_0.className = "subject-entry-row";
+				patient_entry.appendChild(row_0);
+
+				let logo_container = document.createElement("div");
+				logo_container.id = "patient-entry-" + (i + 1) + "-logo-container";
+				logo_container.className = "subject-entry-logo-container";
+				row_0.appendChild(logo_container);
+
+				let logo_small = document.createElement("img");
+				logo_small.id = "patient-entry-" + (i + 1) + "-logo";
+				logo_small.className = "subject-entry-logo";
+				logo_small.src = "assets/img/logo-small.png";
+				logo_container.appendChild(logo_small);
+
+				let subject_container = document.createElement("div");
+				subject_container.id = "patient-entry-" + (i + 1) + "-subject-container";
+				subject_container.className = "subject-entry-subject-container";
+				row_0.appendChild(subject_container);
+				subject_container.innerHTML = "PATIENT";
+
 				let row_1 = document.createElement("div");
 				row_1.id = "patient-entry-" + (i + 1) + "-row-1";
 				row_1.className = "subject-entry-row";
@@ -843,6 +865,28 @@ function fetchDonorsPatients() {
 						donor_entry.id = "donor-entry-" + (i + 1);
 						donor_entry.className = "donor-entry subject-entry";
 						donor_container.appendChild(donor_entry);
+
+						let row_0 = document.createElement("div");
+						row_0.id = "donor-entry-" + (i + 1) + "-row-0";
+						row_0.className = "subject-entry-row";
+						donor_entry.appendChild(row_0);
+
+						let logo_container = document.createElement("div");
+						logo_container.id = "donor-entry-" + (i + 1) + "-logo-container";
+						logo_container.className = "subject-entry-logo-container";
+						row_0.appendChild(logo_container);
+
+						let logo_small = document.createElement("img");
+						logo_small.id = "donor-entry-" + (i + 1) + "-logo";
+						logo_small.className = "subject-entry-logo";
+						logo_small.src = "assets/img/logo-small.png";
+						logo_container.appendChild(logo_small);
+
+						let subject_container = document.createElement("div");
+						subject_container.id = "donor-entry-" + (i + 1) + "-subject-container";
+						subject_container.className = "subject-entry-subject-container";
+						row_0.appendChild(subject_container);
+						subject_container.innerHTML = "DONOR";
 
 						let row_1 = document.createElement("div");
 						row_1.id = "donor-entry-" + (i + 1) + "-row-1";
