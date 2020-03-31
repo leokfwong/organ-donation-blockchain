@@ -274,13 +274,95 @@ const contractAbi = [{
 	"type": "function"
 }];
 
-const contractAddress = '0x5DE7EE2BedB6b0ff5096cc963ab78de9e4f93a7C';
+const contractAddress = '0x5F6A605380Fdf30cf5ef0eaB4E88df09EC8d444f';
 const contract = new web3.eth.Contract(contractAbi, contractAddress);
 
 function clearForm() {
 	for (let i = 0; i < input_names.length; i++) {
 		document.getElementById(input_names[i]).value = "";
 	}
+}
+
+function checkBlockchainStatus() {
+
+	console.log("Checking blockchain status...");
+
+	let status = document.getElementById("status");
+	let status_icon = document.getElementById("status-icon");
+	let status_text = document.getElementById("status-text");
+
+	web3.eth.net.isListening().then((s) => {
+		console.log("Connected to node...");
+		status.style.color = "#22B573";
+		status_icon.style.background = "#22B573";
+		status_text.innerHTML = "Online";
+
+		let user_profile = document.getElementById("user-profile");
+		let user_obj = JSON.parse(sessionStorage.getItem("user"));
+
+		let user_title = document.createElement("div");
+		user_title.id = "user-profile-title";
+		user_profile.appendChild(user_title);
+		user_title.innerHTML = "Logged in as:";
+
+		let user_icon = document.createElement("div");
+		user_icon.id = "user-profile-icon";
+		user_profile.appendChild(user_icon);
+		user_icon.innerHTML = "<i class='" + user_obj.icon + "'></i>";
+
+		let user_input = document.createElement("select");
+		user_input.id = "user-profile-input";
+		user_profile.appendChild(user_input);
+		user_input.addEventListener("change", function() {
+			switchUser();
+		});
+
+		let options = ["donor", "patient", "doctor"];
+
+		for (let i = 0; i < options.length; i++) {
+			let user_option = document.createElement("option");
+			user_option.value = options[i];
+			user_option.text = capitalize(options[i]);
+			user_input.appendChild(user_option);
+		}
+
+	}).catch((err) => {
+		console.log("Not connected to blockchain: ", err);
+		status.style.color = "#D84A49";
+		status_icon.style.background = "#D84A49";
+		status_text.innerHTML = "Offline";
+	});
+}
+
+function setDefaultUser() {
+	let user_obj = {};
+	user_obj.type = "donor";
+	user_obj.address = "0xb330AA7f67D10e6BBdFF3633FAfe34a286116B04";
+	user_obj.icon = "fas fa-hand-holding-heart";
+
+	sessionStorage.setItem("user", JSON.stringify(user_obj));
+}
+
+function switchUser() {
+	let user_input = document.getElementById("user-profile-input");
+	let obj = {};
+	obj.type = user_input.value;
+	if (user_input.value == "donor") {
+		obj.address = "0xb330AA7f67D10e6BBdFF3633FAfe34a286116B04";
+		obj.icon = "fas fa-hand-holding-heart";
+	} else if (user_input.value == "patient") {
+		obj.address = "0x0a02D0A98FD47A5B1eF2789fd342c2Fb9c69447f";
+		obj.icon = "fas fa-user-injured";
+	} else if (user_input.value == "doctor") {
+		obj.address = "0xcE4b0b541efee563E818f549F27C3087c6888516";
+		obj.icon = "fas fa-stethoscope";
+	} else {
+		console.log("User type doesn't exist...");
+	}
+	let user_icon = document.getElementById("user-profile-icon");
+	user_icon.innerHTML = "<i class='" + obj.icon + "'></i>";
+
+	sessionStorage.setItem("user", JSON.stringify(obj));
 }
 
 function addPatient(firstname, lastname, bloodtype, medid, height, weight) {

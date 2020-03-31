@@ -7,6 +7,9 @@ const capitalize = (s) => {
 
 window.onload = function() {
 
+	setDefaultUser();
+	checkBlockchainStatus();
+
 	let add_donor_menu = document.getElementById('menu-item-1');
 	add_donor_menu.addEventListener('click', function() {
 		loadAddCandidateForm("donor");
@@ -109,6 +112,9 @@ function loadAddCandidateForm(type) {
 	form_firstname_input.id = "form-firstname-input";
 	form_firstname_input.className = "form-input";
 	form_firstname.appendChild(form_firstname_input);
+	form_firstname_input.addEventListener("focusout", function() {
+		checkNameValidity(form_firstname_input.id);
+	});
 
 	// Form last name
 	let form_lastname = document.createElement("div");
@@ -126,6 +132,9 @@ function loadAddCandidateForm(type) {
 	form_lastname_input.id = "form-lastname-input";
 	form_lastname_input.className = "form-input";
 	form_lastname.appendChild(form_lastname_input);
+	form_lastname_input.addEventListener("focusout", function() {
+		checkNameValidity(form_lastname_input.id);
+	});
 
 	// Form blood type
 	let form_bloodtype = document.createElement("div");
@@ -139,10 +148,19 @@ function loadAddCandidateForm(type) {
 	form_bloodtype.appendChild(form_bloodtype_title);
 	form_bloodtype_title.innerHTML = "Blood Type";
 
-	let form_bloodtype_input = document.createElement("input");
-	form_bloodtype_input.id = "form-bloodtype-input";
-	form_bloodtype_input.className = "form-input";
-	form_bloodtype.appendChild(form_bloodtype_input);
+	let form_bloodtype_select = document.createElement("select");
+	form_bloodtype_select.id = "form-bloodtype-input";
+	form_bloodtype_select.className = "form-input";
+	form_bloodtype.appendChild(form_bloodtype_select);
+
+	let bloodtypes = ["AB+", "AB-", "A+", "A-", "B+", "B-", "O+", "O-"];
+
+	for (let i = 0; i < bloodtypes.length; i++) {
+		bloodtype_option = document.createElement("option");
+		bloodtype_option.value = bloodtypes[i];
+		bloodtype_option.text = bloodtypes[i];
+		form_bloodtype_select.appendChild(bloodtype_option);
+	}
 
 	// Form medid
 	let form_medid = document.createElement("div");
@@ -160,6 +178,9 @@ function loadAddCandidateForm(type) {
 	form_medid_input.id = "form-medid-input";
 	form_medid_input.className = "form-input";
 	form_medid.appendChild(form_medid_input);
+	form_medid_input.addEventListener("focusout", function() {
+		checkMedicalInsurance("form-medid-input");
+	});
 
 	let form_height_weight = document.createElement("div");
 	form_height_weight.id = "form-height-weight";
@@ -182,6 +203,9 @@ function loadAddCandidateForm(type) {
 	form_height_input.id = "form-height-input";
 	form_height_input.className = "form-input";
 	form_height.appendChild(form_height_input);
+	form_height_input.addEventListener("focusout", function() {
+		checkHeightWeight(form_height_input.id);
+	});
 
 	// Form weight
 	let form_weight = document.createElement("div");
@@ -199,6 +223,9 @@ function loadAddCandidateForm(type) {
 	form_weight_input.id = "form-weight-input";
 	form_weight_input.className = "form-input";
 	form_weight.appendChild(form_weight_input);
+	form_weight_input.addEventListener("focusout", function() {
+		checkHeightWeight(form_weight_input.id);
+	});
 
 	// Form submit
 	let form_submit_row = document.createElement("div");
@@ -225,23 +252,147 @@ function loadAddCandidateForm(type) {
 	form_response_message.id = "form-response-message";
 	form_response.appendChild(form_response_message);
 
-	form_submit_button.addEventListener('click', function() {
-		let firstname = document.getElementById("form-firstname-input").value;
-		let lastname = document.getElementById("form-lastname-input").value;
-		let bloodtype = document.getElementById("form-bloodtype-input").value;
-		let medid = document.getElementById("form-medid-input").value;
-		let height = document.getElementById("form-height-input").value;
-		let weight = document.getElementById("form-weight-input").value;
-		console.log("Adding patient " + firstname + " " + lastname + " (" + bloodtype + ", " + medid + ", " + height + ", " + weight + ")");
-		if (type == "patient") {
-			addPatient(firstname, lastname, bloodtype, medid, height, weight);
-		} else if (type == "donor") {
-			addDonor(firstname, lastname, bloodtype, medid, height, weight);
+	form_submit_button.addEventListener("click", function() {
+		let errors = checkFormValidity(["form-firstname-input", "form-lastname-input", "form-medid-input", "form-height-input", "form-weight-input"]);
+		if (errors.length == 0) {
+			let firstname = document.getElementById("form-firstname-input").value;
+			let lastname = document.getElementById("form-lastname-input").value;
+			let bloodtype = document.getElementById("form-bloodtype-input").value;
+			let medid = document.getElementById("form-medid-input").value;
+			let height = document.getElementById("form-height-input").value;
+			let weight = document.getElementById("form-weight-input").value;
+			console.log("Adding patient " + firstname + " " + lastname + " (" + bloodtype + ", " + medid + ", " + height + ", " + weight + ")");
+			if (type == "patient") {
+				addPatient(firstname, lastname, bloodtype, medid, height, weight);
+			} else if (type == "donor") {
+				addDonor(firstname, lastname, bloodtype, medid, height, weight);
+			} else {
+				console.log("Candidate type doesn't exist.");
+			}
 		} else {
-			console.log("Candidate type doesn't exist.");
+			console.log("Incomplete form!");
+			let form_response = document.getElementById("form-response");
+			let form_response_message = document.getElementById("form-response-message");
+			form_response.style.display = "flex";
+			form_response.style.background = "#D84A49";
+			form_response_message.innerHTML = "";
+
+			for (let i = 0; i < errors.length; i++) {
+				let error = document.createElement("div");
+				error.id = "form-response-error-" + (i + 1);
+				error.className = "form-response-error";
+				form_response_message.appendChild(error);
+				error.innerHTML = "- " + errors[i];
+			}
+
 		}
 	});
+}
 
+function checkNameValidity(divid, label) {
+	let obj = {};
+	obj.valid = false;
+	obj.error = [];
+	let input_field = document.getElementById(divid);
+	if (input_field.value.length == 0) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " field is required and cannot be empty.")
+	} else if (!input_field.value.match(/^[a-zA-Z-'\s]+$/)) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " field can only contain letters.")
+	} else {
+		input_field.style.color = "#3D485E";
+		obj.valid = true;
+	}
+	return (obj);
+}
+
+function checkMedicalInsurance(divid, label) {
+	let obj = {};
+	obj.valid = false;
+	obj.error = [];
+	let input_field = document.getElementById(divid);
+	if (input_field.value.length == 0) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " field is required and cannot be empty.")
+	} else if (input_field.value.length < 10) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " must be 10 characters long.")
+	} else if (!input_field.value.match(/^[a-zA-Z0-9]+$/)) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " field can only contain letters.")
+	} else {
+		input_field.style.color = "#3D485E";
+		obj.valid = true;
+	}
+	return (obj);
+}
+
+function checkHeightWeight(divid, label) {
+	let obj = {};
+	obj.valid = false;
+	obj.error = [];
+
+	let min, max;
+	if (divid == "form-height-input") {
+		min = 50;
+		max = 280;
+	} else {
+		min = 5;
+		max = 650;
+	}
+
+	let input_field = document.getElementById(divid);
+	if (input_field.value.length == 0) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " field is required and cannot be empty.")
+	} else if (!input_field.value.match(/^[0-9\.-]+$/)) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " must be a number.")
+	} else if (input_field.value < min || input_field.value > max) {
+		input_field.style.color = "#D84A49";
+		obj.error.push(label + " is out of range (" + min + " - " + max + ")");
+	} else {
+		input_field.style.color = "#3D485E";
+		obj.valid = true;
+	}
+	return (obj);
+}
+
+function checkFormValidity(fields) {
+	let errors = [];
+	for (let i = 0; i < fields.length; i++) {
+		if (fields[i] == "form-firstname-input") {
+			let check = checkNameValidity(fields[i], "First Name");
+			if (check.valid == false) {
+				errors.push(check.error);
+			}
+		} else if (fields[i] == "form-lastname-input") {
+			let check = checkNameValidity(fields[i], "Last Name");
+			if (check.valid == false) {
+				errors.push(check.error);
+			}
+		} else if (fields[i] == "form-medid-input") {
+			let check = checkMedicalInsurance(fields[i], "Medical Insurance #");
+			if (check.valid == false) {
+				errors.push(check.error);
+			}
+		} else if (fields[i] == "form-height-input") {
+			let check = checkHeightWeight(fields[i], "Height");
+			if (check.valid == false) {
+				errors.push(check.error);
+			}
+		} else if (fields[i] == "form-weight-input") {
+			let check = checkHeightWeight(fields[i], "Weight");
+			if (check.valid == false) {
+				errors.push(check.error);
+			}
+		} else {
+
+		}
+	}
+	console.log(errors);
+	return (errors);
 }
 
 function viewCandidateList(type) {
@@ -258,7 +409,7 @@ function viewCandidateList(type) {
 	content_box.style.display = "flex";
 	// Update page title
 	let page_title = document.getElementById("page-title");
-	page_title.innerHTML = "View " + type + " list";
+	page_title.innerHTML = capitalize(type) + "s List";
 
 	// List container
 	let list_container = document.createElement("div");
