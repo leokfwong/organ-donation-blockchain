@@ -42,6 +42,13 @@ body {
 	justify-content: center;
 	align-items: center;
 }
+.blink {
+	animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
 #status-icon {
 	background: lightgrey;
 	border-radius: 100%;
@@ -160,6 +167,7 @@ h1, h2, h3 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
 }
 .menu-item-text {
 	width: 60%;
@@ -244,7 +252,7 @@ h1, h2, h3 {
 	align-items: center;
 	border-radius: 5px;
 	color: white;
-	margin-top: 25px;
+	margin: 25px 0px 50px 0;
 	width: 69%;
 }
 #form-response-message {

@@ -283,6 +283,11 @@ function clearForm() {
 	}
 }
 
+function test(address) {
+	let hashed = web3.eth.accounts.hashMessage(address);
+	console.log(hashed);
+}
+
 function checkBlockchainStatus() {
 
 	console.log("Checking blockchain status...");
@@ -295,6 +300,7 @@ function checkBlockchainStatus() {
 		console.log("Connected to node...");
 		status.style.color = "#22B573";
 		status_icon.style.background = "#22B573";
+		status_icon.classList.remove("blink");
 		status_text.innerHTML = "Online";
 
 		let user_profile = document.getElementById("user-profile");
@@ -330,6 +336,7 @@ function checkBlockchainStatus() {
 		console.log("Not connected to blockchain: ", err);
 		status.style.color = "#D84A49";
 		status_icon.style.background = "#D84A49";
+		status_icon.classList.remove("blink");
 		status_text.innerHTML = "Offline";
 	});
 }
