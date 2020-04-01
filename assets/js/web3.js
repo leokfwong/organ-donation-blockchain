@@ -298,6 +298,8 @@ function checkBlockchainStatus() {
 
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
+		setDefaultUser("donor");
+
 		status.style.color = "#22B573";
 		status_icon.style.background = "#22B573";
 		status_icon.classList.remove("blink");
@@ -334,6 +336,7 @@ function checkBlockchainStatus() {
 
 	}).catch((err) => {
 		console.log("Not connected to blockchain: ", err);
+		setDefaultUser("offline");
 		status.style.color = "#D84A49";
 		status_icon.style.background = "#D84A49";
 		status_icon.classList.remove("blink");
@@ -341,11 +344,16 @@ function checkBlockchainStatus() {
 	});
 }
 
-function setDefaultUser() {
+function setDefaultUser(user_type) {
 	let user_obj = {};
-	user_obj.type = "donor";
-	user_obj.address = "0xb330AA7f67D10e6BBdFF3633FAfe34a286116B04";
-	user_obj.icon = "fas fa-hand-holding-heart";
+	if (user_type == "donor") {
+		user_obj.type = "donor";
+		user_obj.address = "0xb330AA7f67D10e6BBdFF3633FAfe34a286116B04";
+		user_obj.icon = "fas fa-hand-holding-heart";
+	} else {
+		user_obj.type = "offline";
+	}
+
 
 	sessionStorage.setItem("user", JSON.stringify(user_obj));
 }

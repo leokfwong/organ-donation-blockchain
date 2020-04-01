@@ -7,7 +7,6 @@ const capitalize = (s) => {
 
 window.onload = function() {
 
-	setDefaultUser();
 	checkBlockchainStatus();
 	loadMenuBox();
 
@@ -15,35 +14,35 @@ window.onload = function() {
 
 	let add_donor_menu = document.getElementById('menu-item-1');
 	add_donor_menu.addEventListener('click', function() {
-		if (["donor", "doctor"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
+		if (["donor", "doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
 			loadAddCandidateForm("donor");
 		}
 	});
 
 	let view_donors_list = document.getElementById('menu-item-2');
 	view_donors_list.addEventListener("click", function() {
-		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+		if (["doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
 			viewCandidateList("donor");
 		}
 	});
 
 	let add_patient_menu = document.getElementById('menu-item-3');
 	add_patient_menu.addEventListener('click', function() {
-		if (["patient", "doctor"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
+		if (["patient", "doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
 			loadAddCandidateForm("patient");
 		}
 	});
 
 	let view_patients_list = document.getElementById('menu-item-4');
 	view_patients_list.addEventListener("click", function() {
-		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+		if (["doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
 			viewCandidateList("patient");
 		}
 	});
 
 	let find_matching = document.getElementById("menu-item-5");
 	find_matching.addEventListener("click", function() {
-		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+		if (["doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
 			findMatchings();
 			fetchDonorsPatients();
 		}
@@ -59,7 +58,11 @@ window.onload = function() {
 function loadMenuBox() {
 
 	function filterUI() {
-		let user_type = JSON.parse(sessionStorage.getItem("user")).type;
+		let user_type;
+		let obj = JSON.parse(sessionStorage.getItem("user"));
+		if (obj != null) {
+			user_type = obj.type;
+		}
 		let locked_index;
 		if (user_type == "donor") {
 			locked_index = [2, 3, 4, 5];
