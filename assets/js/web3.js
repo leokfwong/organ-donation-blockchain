@@ -370,6 +370,8 @@ function switchUser() {
 	user_icon.innerHTML = "<i class='" + obj.icon + "'></i>";
 
 	sessionStorage.setItem("user", JSON.stringify(obj));
+
+	loadMenuBox();
 }
 
 function addPatient(firstname, lastname, bloodtype, medid, height, weight) {

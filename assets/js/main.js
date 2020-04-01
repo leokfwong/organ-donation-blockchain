@@ -9,33 +9,44 @@ window.onload = function() {
 
 	setDefaultUser();
 	checkBlockchainStatus();
+	loadMenuBox();
 
 	test("0x183a3ddE689c505C4Fa05CF6a93ed039096f84eD");
 
 	let add_donor_menu = document.getElementById('menu-item-1');
 	add_donor_menu.addEventListener('click', function() {
-		loadAddCandidateForm("donor");
+		if (["donor", "doctor"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
+			loadAddCandidateForm("donor");
+		}
 	});
 
 	let view_donors_list = document.getElementById('menu-item-2');
 	view_donors_list.addEventListener("click", function() {
-		viewCandidateList("donor");
+		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+			viewCandidateList("donor");
+		}
 	});
 
 	let add_patient_menu = document.getElementById('menu-item-3');
 	add_patient_menu.addEventListener('click', function() {
-		loadAddCandidateForm("patient");
+		if (["patient", "doctor"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {
+			loadAddCandidateForm("patient");
+		}
 	});
 
 	let view_patients_list = document.getElementById('menu-item-4');
 	view_patients_list.addEventListener("click", function() {
-		viewCandidateList("patient");
+		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+			viewCandidateList("patient");
+		}
 	});
 
 	let find_matching = document.getElementById("menu-item-5");
 	find_matching.addEventListener("click", function() {
-		findMatchings();
-		fetchDonorsPatients();
+		if (JSON.parse(sessionStorage.getItem("user")).type == "doctor") {
+			findMatchings();
+			fetchDonorsPatients();
+		}
 	});
 
 	let back_button = document.getElementById("page-back");
@@ -46,6 +57,26 @@ window.onload = function() {
 }
 
 function loadMenuBox() {
+
+	function filterUI() {
+		let user_type = JSON.parse(sessionStorage.getItem("user")).type;
+		let locked_index;
+		if (user_type == "donor") {
+			locked_index = [2, 3, 4, 5];
+		} else if (user_type == "patient") {
+			locked_index = [1, 2, 4, 5];
+		} else {
+			locked_index = [];
+		}
+		for (let i = 1; i <= 5; i++) {
+			let overlay = document.getElementById("menu-item-overlay-" + i);
+			if (locked_index.indexOf(i) > -1) {
+				overlay.style.display = "flex";
+			} else {
+				overlay.style.display = "none";
+			}
+		}
+	}
 
 	let menu_box = document.getElementById("menu-box");
 	menu_box.style.display = "flex";
@@ -58,6 +89,8 @@ function loadMenuBox() {
 
 	let page_title = document.getElementById("page-title");
 	page_title.innerHTML = "Home";
+
+	filterUI();
 
 }
 
