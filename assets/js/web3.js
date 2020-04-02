@@ -283,11 +283,6 @@ function clearForm() {
 	}
 }
 
-function test(address) {
-	let hashed = web3.eth.accounts.hashMessage(address);
-	console.log(hashed);
-}
-
 function checkBlockchainStatus() {
 
 	console.log("Checking blockchain status...");
@@ -296,9 +291,10 @@ function checkBlockchainStatus() {
 	let status_icon = document.getElementById("status-icon");
 	let status_text = document.getElementById("status-text");
 
+	setDefaultUser("donor");
+
 	web3.eth.net.isListening().then((s) => {
 		console.log("Connected to node...");
-		setDefaultUser("donor");
 
 		status.style.color = "#22B573";
 		status_icon.style.background = "#22B573";
@@ -490,7 +486,7 @@ function viewPatients(div_id) {
 				header.className = "list-row";
 				list_container.appendChild(header);
 
-				let header_items = ["First Name", "Last Name", "Bloodtype", "Med. Ins. #", "Height", "Weight", "Status"];
+				let header_items = ["First Name", "Last Name", "Blood Type", "Medical Insurance #", "Height", "Weight", "Status"];
 
 				for (let i = 0; i < header_items.length; i++) {
 					let item = document.createElement("div");
@@ -568,7 +564,7 @@ function viewDonors(div_id) {
 				header.className = "list-row";
 				list_container.appendChild(header);
 
-				let header_items = ["First Name", "Last Name", "Bloodtype", "Med. Ins. #", "Height", "Weight", "Status"];
+				let header_items = ["First Name", "Last Name", "Blood Type", "Medical Insurance #", "Height", "Weight", "Status"];
 
 				for (let i = 0; i < header_items.length; i++) {
 					let item = document.createElement("div");

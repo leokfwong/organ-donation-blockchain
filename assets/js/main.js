@@ -10,8 +10,6 @@ window.onload = function() {
 	checkBlockchainStatus();
 	loadMenuBox();
 
-	test("0x183a3ddE689c505C4Fa05CF6a93ed039096f84eD");
-
 	let add_donor_menu = document.getElementById('menu-item-1');
 	add_donor_menu.addEventListener('click', function() {
 		if (["donor", "doctor", "offline"].indexOf(JSON.parse(sessionStorage.getItem("user")).type) > -1) {

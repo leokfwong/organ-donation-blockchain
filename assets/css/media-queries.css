@@ -1,0 +1,124 @@
+
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  // CSS
+}
+
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  // CSS
+}
+
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  // CSS
+}
+
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  // CSS
+}
+
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 681px) and (max-width: 767px) {
+  // CSS
+}
+
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 1px) and (max-width: 680px) {
+  #nav-bar {
+    height: 100px;
+  }
+  #title {
+    justify-content: flex-start;
+  }
+  #title img {
+    padding-left: 15px;
+    width: 60%;
+  }
+  #status-profile {
+    margin-right: 15px;
+  }
+  #status {
+    height: 45%;
+  }
+  #user-profile {
+    height: 55%;
+    align-items: flex-start;
+  }
+  #user-profile-icon {
+    height: auto;
+  }
+  #page-title {
+    margin-left: 15px;
+  }
+  #page-back {
+    margin-right: 15px;
+  }
+  .menu-row {
+    width: 100%;
+  }
+  #form-container {
+    width: 90%;
+    margin-bottom: 25px;
+  }
+  .form-row-multiple {
+    flex-direction: column;
+  }
+  .form-row {
+    padding: 10px 0px 10px 0px;
+  }
+  #form-response {
+    width: 90%;
+  }
+  #list-container {
+    width: 90%;
+    font-size: 81%;
+    overflow: scroll;
+  }
+  #list-row-empty {
+    width: 100%;
+  }
+  .list-row {
+    width: auto;
+  }
+  .list-item {
+    padding: 20px;
+  }
+  #matching-header, #matching-content {
+    width: 90%;
+  }
+  .matching-row {
+    flex-direction: column;
+  }
+  .subject-container {
+    width: 90%;
+  }
+  .subject-entry-row-info {
+    padding-right: 25px;
+  }
+}
