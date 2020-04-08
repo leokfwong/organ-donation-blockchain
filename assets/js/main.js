@@ -8,7 +8,6 @@ const capitalize = (s) => {
 window.onload = function() {
 
 	checkBlockchainStatus();
-	loadMenuBox();
 
 	let add_donor_menu = document.getElementById('menu-item-1');
 	add_donor_menu.addEventListener('click', function() {
@@ -62,6 +61,7 @@ function loadMenuBox() {
 			user_type = obj.type;
 		}
 		let locked_index;
+		console.log(user_type);
 		if (user_type == "donor") {
 			locked_index = [2, 3, 4, 5];
 		} else if (user_type == "patient") {

@@ -330,6 +330,9 @@ function checkBlockchainStatus() {
 			user_input.appendChild(user_option);
 		}
 
+
+		loadMenuBox();
+
 	}).catch((err) => {
 		console.log("Not connected to blockchain: ", err);
 		setDefaultUser("offline");
@@ -337,6 +340,7 @@ function checkBlockchainStatus() {
 		status_icon.style.background = "#D84A49";
 		status_icon.classList.remove("blink");
 		status_text.innerHTML = "Offline";
+		loadMenuBox();
 	});
 }
 
