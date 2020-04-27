@@ -1,6 +1,6 @@
 # Organ Donation Blockchain
 
-Organ Donation Blockchain is a prototype created as a proof-of-concept for a decentralized solution. The application is built on Ethereum, more specifically on Remix where the smart contract is compile and deployed. Metamask serves as a wallet for mananing the fake Ether provided by Ganache. A front-end interface application is built in JavaScript and interacts with the back-end via Web3.js. 
+Organ Donation Blockchain is a prototype created as a proof-of-concept for a decentralized solution. The application is built on Ethereum, more specifically on Remix where the smart contract is compiled and deployed. MetaMask serves as a wallet for managing the fake Ether provided by Ganache. A front-end interface application is built in JavaScript and interacts with the back-end via Web3.js. 
 
 ## Getting Started
 
@@ -8,7 +8,7 @@ The following instructions will create a copy of the project up and running on y
 
 ### Prerequisites
 
-- Meta Mask Chrome extension needs to be installed. (https://metamask.io)
+- MetaMask Chrome extension needs to be installed. (https://metamask.io)
 - Ganache application needs to be installed. (https://www.trufflesuite.com/ganache)
 
 ### Installing
@@ -20,7 +20,7 @@ git clone https://github.com/leokfwong/organ-donation-blockchain.git
 Open the index.html file and ensure it displays the following:
 
 ## Setting up the Environment
-- Ensure that Ganache is running and linked to Metamask.
+- Ensure that Ganache is running and linked to MetaMask.
 - Go to https://remix.ethereum.org and import the OrganDonation.sol file.
 
 ### Compile and Deploy Smart Contract
