@@ -18,6 +18,7 @@ Clone the organ-donation-blockchain repository onto local machine.
 git clone https://github.com/leokfwong/organ-donation-blockchain.git
 ```
 Open the index.html file and ensure it displays the following:
+![doc_img_1](assets/img/doc_img_1.png)
 
 ## Setting up the Environment
 - Ensure that Ganache is running and linked to MetaMask.
